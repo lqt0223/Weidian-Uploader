@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+</head>
+<body>
+	<div id="uploadForm">
+		<p>你已成功登录！</p>
+		在此输入包含商品信息的链接页面: <input type="" name="" id="item_url">
+		<button id="crawl">开始抓取</button>
+		<br>
+		商品名称：<input type="" name="" id="item_name">
+		<br>
+		商品描述: <textarea id="item_comment"></textarea>
+		<br>
+		商品图片： <div id="imgsWrapper"></div>
+		更多图片： <div id="userImgsWrapper"></div>
+		<br>
+		<form id="other">
+			价格：<input type="" name="price">
+			库存：<input type="" name="stock">
+			包邮：<input type="checkbox" name="free_delivery">
+			店长推荐：<input type="checkbox" name="set_top">
+		</form>
+	</div>
+	<script type="text/javascript" src="client/js/upload.js"></script>
+	<script type="text/javascript" src="client/js/components/util.js"></script>
+</body>
+</html>
