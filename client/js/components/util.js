@@ -14,6 +14,7 @@ function ajaxGET(url,params,callback){
 	};
 	xhr.open("GET",url,true);
 	xhr.send();
+
 	// return xhr.responseText;
 }
 
@@ -21,14 +22,16 @@ function ajaxPOST(url,async,dataObject,callback){
 	var xhr = new XMLHttpRequest();
 	dataObject = JSON.stringify(dataObject);
 	xhr.onreadystatechange = function(){
+		var response = {};
 		if(xhr.readyState == 4 && xhr.status == 200){
-			callback(xhr.responseText);
+			response = JSON.parse(xhr.responseText);
+			callback(response);
 		}
 	};
 	xhr.open("POST",url,async);
 	xhr.send(dataObject);
 	if(async == false){
-		return xhr.responseText;
+		return response;
 	}
 }
 
@@ -51,10 +54,22 @@ function checkToken(){
 		action: "checkToken"
 	};
 	ajaxPOST(url,true,params,function(response){
-		if(response == true && window.location == "/login"){
+		if(response.status == 0 && window.location.pathname == "/login" ){
 			window.location = "/upload";
-		}else if(response == false && window.location == "/upload"){
+		}else if(response.status == 1 && (window.location.pathname == "/upload" || window.location.pathname == "/config")){
 			window.location = "/login";
 		}
 	});
+}
+
+function getConfig(callback){
+	var url = "/server/crawler";
+	var params = {action: "get"};
+	ajaxPOST(url,true,params,function(response){
+		callback(response)
+	});
+}
+
+function navbarMessage(message, timeout){
+	// var 
 }

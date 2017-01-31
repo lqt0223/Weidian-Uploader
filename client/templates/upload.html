@@ -1,29 +1,133 @@
-<!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-	<title></title>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+	<meta charset="UTF-8" />
+	<title>WdUploader</title>
+	<link rel="stylesheet" href="client/css/bootstrap.min.css">
+	<link rel="stylesheet" type="text/css" href="client/css/ring.css">
+	<!-- <link rel="stylesheet" type="text/css" href="http://apps.bdimg.com/libs/todc-bootstrap/3.1.1-3.2.1/todc-bootstrap.min.css"> -->
 </head>
 <body>
-	<div id="uploadForm">
-		<p>你已成功登录！</p>
-		在此输入包含商品信息的链接页面: <input type="" name="" id="item_url">
-		<button id="crawl">开始抓取</button>
-		<br>
-		商品名称：<input type="" name="" id="item_name">
-		<br>
-		商品描述: <textarea id="item_comment"></textarea>
-		<br>
-		商品图片： <div id="imgsWrapper"></div>
-		更多图片： <div id="userImgsWrapper"></div>
-		<br>
-		<form id="other">
-			价格：<input type="" name="price">
-			库存：<input type="" name="stock">
-			包邮：<input type="checkbox" name="free_delivery">
-			店长推荐：<input type="checkbox" name="set_top">
-		</form>
+	<nav class="navbar navbar-default navbar-fixed-top" role="navigation">
+	  <div class="container-fluid">
+	    <!-- Brand and toggle get grouped for better mobile display -->
+	    <div class="navbar-header">
+	      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#data">
+	        <span class="sr-only">Toggle navigation</span>
+	        <span class="icon-bar"></span>
+	        <span class="icon-bar"></span>
+	        <span class="icon-bar"></span>
+	      </button>
+	      <a class="navbar-brand" href="#" id="navbar-text">欢迎_</a>
+	    </div>
+
+	    <!-- Collect the nav links, forms, and other content for toggling -->
+	    <div class="collapse navbar-collapse" id="data">
+	      <ul class="nav navbar-nav">
+	        <li><a href="#">设定</a></li>
+	        <li><a href="#">退出</a></li>
+	      </ul>
+	    </div><!-- /.navbar-collapse -->
+	  </div><!-- /.container-fluid -->
+	</nav>
+	<div class="container-fluid">
+		<div class="row">
+			<div class="col-xs-12">
+				<div class="page-header">
+					<h1>&nbsp</h1>
+					<h1>WdUploader <br /><h4>Weidian item uploader + crawler.</h4> </h1>
+				</div>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-xs-8">
+					<select name="" id="config_selector" class="form-control">
+						<option value="">kakaku</option>
+						<option value="">乐天</option>
+						<option value="">雅虎购物</option>
+					</select>
+			</div>
+			<div class="col-xs-4">
+				<button class="btn btn-primary btn-block" id="config">我的配置</button>
+			</div>
+		</div>
+		<div class="row"><br /></div>
+		<div class="row">
+			<div class="col-xs-12">
+				<div class="input-group">
+					<input type="text" class="form-control" placeholder="外网商品网址"/ id="item_src">
+					<span class="input-group-btn">
+						<button class="btn btn-primary" id="crawl">开始抓取</button>
+	<!-- 					<button class="btn btn-primary">Config</button> -->
+					</span>
+				</div>
+			</div>
+		</div>
+		<div class="row">
+			<br />
+		</div>
+		<div class="row">
+			<div class="col-xs-12">
+				<div class="panel panel-default">
+					<div class="panel-heading">商品信息</div>
+					<div class="panel-body">
+						<form class="form" role="form">
+						  <div class="form-group">
+						    <label for="item_name" class="control-label">品名：</label>
+						      <input type="text" class="form-control" id="item_name">
+						  </div>
+						  <div class="form-group">
+						    <label for="item_comment" class="control-label">描述：</label>
+						      <textarea type="text" class="form-control" id="item_comment"></textarea>
+						  </div>
+						  <div class="form-group">
+						    <label for="price" class="control-label">价格：</label>
+						      <input type="text" class="form-control" id="price">
+						  </div>
+						  <div class="form-group">
+						    <label for="stock" class="control-label">库存：</label>
+						      <input type="text" class="form-control" id="stock">
+						  </div>
+						  <div class="form-group">
+						  	<label for="free_delivery" class="control-label">包邮：</label>
+						  	<input type="checkbox" name="" id="free_delivery">
+						  </div>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-xs-12">
+				<div class="panel panel-default">
+					<div class="panel-heading">商品图片</div>
+					<div class="panel-body">
+							<p>抓取图片： </p>
+							<!-- <div style="height:500px;overflow: hidden;" id="image-grid"></div> -->
+							<br />
+							<button class="btn btn-primary btn-block">上传图片</button>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-xs-12">
+				<div class="btn-group btn-group-justified">
+					<div class="btn-group">
+						<button class="btn btn-info btn-block">上传商品</button>	
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="row"> <br> </div>
 	</div>
-	<script type="text/javascript" src="client/js/upload.js"></script>
+	<script src="client/js/components/jquery-3.1.1.min.js"></script>
+	<script src="client/js/components/bootstrap.min.js"></script>
+	<script type="text/javascript" src="client/js/components/message.js"></script>
+	<script type="text/javascript" src="client/js/components/image-pop.js"></script>
+	<script type="text/javascript" src="client/js/components/checkmark.js"></script>
+	<script type="text/javascript" src="client/js/components/image-grid.js"></script>
 	<script type="text/javascript" src="client/js/components/util.js"></script>
+	<script type="text/javascript" src="client/js/upload.js"></script>
 </body>
 </html>

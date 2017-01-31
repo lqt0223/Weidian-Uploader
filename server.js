@@ -1,8 +1,9 @@
 var http = require('http');
 var fs = require('fs');
 var url = require('url');
-var querystring = require('querystring');
-var WdServer = require('./server/wdServer');
+var WdServer = require('./server/wd-server');
+
+var VALID_URLS = ["/server","/login","/upload","/config"];
 
 function loadFile(filePath,response){
 	if(filePath[0] != "."){
@@ -38,7 +39,7 @@ function loadFile(filePath,response){
 					loadFile("./client/templates/404.html",response);
 				}else{
 					response.writeHead(500);
-					response.end('Sorry, check with the site admin for error: '+err.code+' ..\n');
+					response.end('Sorry, check with the site admin for error: '+ err.code +' ..\n');
 					response.end();
 				}
 			}else{
@@ -46,54 +47,37 @@ function loadFile(filePath,response){
 				response.end(content, 'utf-8');
 			}
 		});
+	}else{
+		var firstPath = "/" + filePath.split("/")[1];
+		var result = VALID_URLS.some(function(element){
+			return element == firstPath;
+		});
+		if(!result){
+			loadFile("./client/templates/404.html",response);
+		}
 	}
 }
 
 var server = http.createServer(function(request, response) {
-	WdServer.handle(request,function(w_response){
-		response.write(JSON.stringify(w_response));
-		response.end();
-	});
 	var accessPath = request.url.split("?")[0];
-	switch(accessPath){
-		case "/":{}
-		case "/login":{
-			loadFile("./client/templates/login.html", response);
-			break;
-		}
-		case "/upload":{
-			loadFile("./client/templates/upload.html", response);
-			break;
-		}
-		case "/server":{
-			WdServer.handle(request,function(w_response){
-				response.write(JSON.stringify(w_response));
-				response.end();
-			});
-			// request.on("data",function(data){
-			// 	var params = querystring.parse(data.toString());
-			// 	if(params.action == "login"){
-			// 		if(login(params)){
-			// 			var session = SessionServer.start();
-			// 			var result = {
-			// 				"session": session,
-			// 				"redirect": "/index"
-			// 			};
-			// 			response.write(JSON.stringify(result));
-			// 			response.end();
-			// 		}
-			// 	}else if(params.action == "logout"){
-			// 		response.write(SessionServer.stop());
-			// 		response.end();
-			// 	}
-			// });
-			break;
-		}
-		default: {
-			loadFile(accessPath, response);
-			break;
-		}
+	if("/" + accessPath.split("/")[1] == VALID_URLS[0]){
+		WdServer.handle(request,function(w_response){
+			// w_response = w_response ? JSON.stringify(w_response) : "403 Forbidden";
+			response.write(JSON.stringify(w_response));
+			response.end();
+		});		
+	}else if(accessPath == "/" || accessPath == VALID_URLS[1]){
+		loadFile("./client/templates/login.html",response);
+	}else if(accessPath == VALID_URLS[2]){
+		loadFile("./client/templates/upload.html",response);
+	}else if(accessPath == VALID_URLS[3]){
+		loadFile("./client/templates/config.html",response);
+	}else if(accessPath == "/demo"){
+		loadFile("./client/templates/index.html",response);
+	}else{
+		loadFile(accessPath, response);
 	}
+
 }).listen(8888);
 console.log('Server running at http://127.0.0.1:8888/');
 
@@ -153,8 +137,6 @@ console.log('Server running at http://127.0.0.1:8888/');
 
 // }).listen(8888);
 
-// //todo: for safety reason, store token in server.
-// //todo: learn to use session on nodeJS, invalidate the token in 1 hours.
 // function getAccessToken(appkey,secret,callback){
 // 	if(accessToken){
 // 		callback(accessToken);
@@ -203,7 +185,7 @@ console.log('Server running at http://127.0.0.1:8888/');
 // 			}else{
 // 				var $ = response.$;
 // 				var imgLinks = $(".imgList a");
-// 				for (var i = 0; i < 10; i++) { //todo: pagination if there is more than 10 pages;
+// 				for (var i = 0; i < 10; i++) { //later: pagination if there is more than 10 pages;
 // 					var userImgUrl = imgLinks[i].attribs.href;
 // 					userImgCrawler.queue(userImgUrl);
 // 				}
