@@ -54,15 +54,23 @@ function checkToken(){
 		action: "checkToken"
 	};
 	ajaxPOST(url,true,params,function(response){
-		if(response.status == 0 && window.location.pathname == "/login" ){
-			window.location = "/upload";
-		}else if(response.status == 1 && (window.location.pathname == "/upload" || window.location.pathname == "/config")){
-			window.location = "/login";
+		if(response.status == 0){ //success
+			document.getElementById("navbar-text").innerText = "欢迎" + window.sessionStorage.getItem("appkey");
+			if(window.location.hash == "#/login" || window.location.hash == ""){
+				window.location = "#/upload";
+			}
+		}else if(response.status == 1){
+			console.log(window.location.hash);
+			document.getElementById("navbar-text").innerText = "WdUploader";
+			window.sessionStorage.removeItem("appkey");
+			if(window.location.hash == "#/upload" || window.location.hash == "#/config"){
+				window.location = "#/login";
+			}
 		}
 	});
 }
 
-function getConfig(callback){
+function getCrawlers(callback){
 	var url = "/server/crawler";
 	var params = {action: "get"};
 	ajaxPOST(url,true,params,function(response){

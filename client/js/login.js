@@ -15,7 +15,7 @@ document.getElementById("auth").onclick = function(){
 	ajaxPOST(url,true,params,function(response){
 		if(response.status == 0){
 			console.log(response);
-			window.location = "/upload";
+			window.location = "#/upload";
 			window.sessionStorage.setItem("appkey",appkey);
 		}else{
 			console.log("Your appkey or secret is not correct");
@@ -23,6 +23,4 @@ document.getElementById("auth").onclick = function(){
 	});
 };
 
-window.onload = function(){
-	checkToken();
-};
+checkToken();

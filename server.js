@@ -2,8 +2,8 @@ var http = require('http');
 var fs = require('fs');
 var url = require('url');
 var WdServer = require('./server/wd-server');
-
-var VALID_URLS = ["/server","/login","/upload","/config"];
+var TEMPLATE_URLS = ["/login","/upload","/config","/demo"];
+// add a new path here when you need a new template page. "/server" is not available
 
 function loadFile(filePath,response){
 	if(filePath[0] != "."){
@@ -24,7 +24,7 @@ function loadFile(filePath,response){
 		'.gif': 'image/gif',
 		'.wav': 'audio/wav',
 		'.mp4': 'video/mp4',
-		'.woff': 'application/font-woff',   
+		'.woff': 'application/font-woff',
 		'.ttf': 'application/font-ttf',
 		'.eot': 'application/vnd.ms-fontobject',
 		'.otf': 'application/font-otf',
@@ -43,13 +43,14 @@ function loadFile(filePath,response){
 					response.end();
 				}
 			}else{
+				// console.log(contentType + " / " + filePath);
 				response.writeHead(200, { 'Content-Type': contentType });
 				response.end(content, 'utf-8');
 			}
 		});
 	}else{
 		var firstPath = "/" + filePath.split("/")[1];
-		var result = VALID_URLS.some(function(element){
+		var result = TEMPLATE_URLS.some(function(element){
 			return element == firstPath;
 		});
 		if(!result){
@@ -60,22 +61,20 @@ function loadFile(filePath,response){
 
 var server = http.createServer(function(request, response) {
 	var accessPath = request.url.split("?")[0];
-	if("/" + accessPath.split("/")[1] == VALID_URLS[0]){
+	if("/" + accessPath.split("/")[1] == "/server"){  // route for "/server" that handles data transition
 		WdServer.handle(request,function(w_response){
 			// w_response = w_response ? JSON.stringify(w_response) : "403 Forbidden";
 			response.write(JSON.stringify(w_response));
 			response.end();
-		});		
-	}else if(accessPath == "/" || accessPath == VALID_URLS[1]){
-		loadFile("./client/templates/login.html",response);
-	}else if(accessPath == VALID_URLS[2]){
-		loadFile("./client/templates/upload.html",response);
-	}else if(accessPath == VALID_URLS[3]){
-		loadFile("./client/templates/config.html",response);
-	}else if(accessPath == "/demo"){
-		loadFile("./client/templates/index.html",response);
+		});	
+	}else if(accessPath == "/"){  // load frame containing the fixed navbar
+		loadFile("./client/templates/frame.html",response);
+	}else if(TEMPLATE_URLS.some(function(element){return element == accessPath})){ // load template html for pages
+		loadFile("./client/templates" + accessPath + ".html",response);
+	}else if(accessPath == "/favicon.ico"){ // ignore favicon
+		response.end();
 	}else{
-		loadFile(accessPath, response);
+		loadFile(accessPath, response); // load css and js files
 	}
 
 }).listen(8888);

@@ -51,6 +51,7 @@ WdServer.handle = function(request,callback){
 						break;
 					}
 				}
+				break;
 			}
 			case "auth": {
 				switch(path[2]){
@@ -67,6 +68,7 @@ WdServer.handle = function(request,callback){
 						break;
 					}
 				}
+				break;
 			}
 			case "database": {
 				WdDatabase.query(params,function(results){
@@ -211,8 +213,8 @@ WdServer.crawler = {
 						action: "insert",
 						table: "crawler",
 						data: {
-							name: params.name,
-							host: params.host,
+							crawler_name: params.crawler_name,
+							url_pattern: params.url_pattern,
 							title_selector: params.title_selector,
 							comment_selector:params.comment_selector,
 							image_selector: params.image_selector
@@ -245,7 +247,7 @@ WdServer.crawler = {
 					var dbParams = {
 						action: "delete",
 						table: "crawler",
-						condition: "name=" + params.name // later: learn how to use SQL join
+						condition: "crawler_name=" + params.crawler_name // later: learn how to use SQL join
 					};
 					WdDatabase.query(dbParams,function(result){
 						callback(result);
@@ -258,7 +260,7 @@ WdServer.crawler = {
 					var dbParams = {
 						action: "select",
 						table: "crawler",
-						condition :"name='" + params.name + "'"
+						condition :"crawler_name='" + params.crawler_name + "'"
 					};
 					WdDatabase.query(dbParams,function(crawlerInfo){
 						if(crawlerInfo){
@@ -273,7 +275,7 @@ WdServer.crawler = {
 		}
 	},
 	run: function(crawlerInfo,url,callback){
-		var map = WdServer.crawler.extract(crawlerInfo.pattern,url);
+		var map = WdServer.crawler.extract(crawlerInfo.url_pattern,url);
 		if(map.length == 0){
 			callback("fail");
 		}

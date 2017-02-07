@@ -75,12 +75,7 @@ var imgPanel = document.getElementsByClassName("panel-body")[1];
 
 imgPanel.insertBefore(imageGrid.view,imgPanel.childNodes[2]);
 
-document.getElementById("item_src").value = "http://kakaku.com/item/K0000752291/"; //debug
-
-document.getElementById("config").onclick = function(e){
-	e.preventDefault();
-	window.location = "./config";
-};
+document.getElementById("item-src").value = "http://kakaku.com/item/K0000752291/"; //debug
 
 document.getElementById("crawl").onclick = function(e){
 	e.preventDefault();
@@ -89,12 +84,12 @@ document.getElementById("crawl").onclick = function(e){
 	// while(imageWrapper.hasChildNodes()){
 	// 	imageWrapper.removeChild(imageWrapper.firstChild);
 	// }
-	var itemSRC = document.getElementById("item_src").value;
-	var i = document.getElementById("config_selector").selectedIndex
-	var configName = window.sessionStorage.getItem("configs");
-	configName = JSON.parse(configName)[0].name;
+	var itemSRC = document.getElementById("item-src").value;
+	var crawlerSelect = document.getElementById("crawler-select");
+	var i = crawlerSelect.selectedIndex;
+	var crawlerName = crawlerSelect.children[i].innerText;
 	var params = {
-		name: configName,
+		crawler_name: crawlerName,
 		url: itemSRC,
 		action: "run"
 	};
@@ -111,8 +106,8 @@ document.getElementById("crawl").onclick = function(e){
 		// data:contentType;base64, encoded
 	});
 	ajaxPOST("/server/crawler",true,params,function(response){
-		document.getElementById("item_name").value = response.title;
-		document.getElementById("item_comment").value = response.comment;
+		document.getElementById("item-name").value = response.title;
+		document.getElementById("item-comment").value = response.comment;
 		//caution: this is not relying on image selector
 		// var id = itemSRC.match(/K\d{10}/g)[0];
 		// var src = "http://img1.kakaku.k-img.com/images/productimage/fullscale/" + id + ".jpg";
@@ -167,24 +162,19 @@ document.getElementById("crawl").onclick = function(e){
 // uploaded.style.border = "1px solid gray";
 // uploaded.style.marginRight = "px";
 
-window.onload = function(){
-	checkToken();
-	getConfig(function(response){
-		window.sessionStorage.setItem("configs",JSON.stringify(response));
-		var configSelector = document.getElementById("config_selector");
-		while(configSelector.hasChildNodes()){
-			configSelector.removeChild(configSelector.firstChild);
-		}
-		for (var i = 0; i < response.length; i++) {
-			var option = document.createElement("option");
-			option.value = response[i].name;
-			option.innerText = response[i].name;
-			configSelector.appendChild(option);
-		}
+checkToken();
+getCrawlers(function(response){
+	var crawlerSelect = document.getElementById("crawler-select");
+	while(crawlerSelect.hasChildNodes()){
+		crawlerSelect.removeChild(crawlerSelect.firstChild);
+	}
+	for (var i = 0; i < response.length; i++) {
+		var option = document.createElement("option");
+		option.value = response[i].crawler_name;
+		option.innerText = response[i].crawler_name;
+		crawlerSelect.appendChild(option);
+	}
+});
 
-	});
-	var navbarText = document.getElementById("navbar-text");
-	navbarText.innerText = navbarText.innerText.replace("_",window.sessionStorage.getItem("appkey"));
-	// console.log(welcomeText);
-	// document.getElementById("welcome").innerText.replace("_",window.sessionStorage.getItem("appkey"));
-};
+// console.log(welcomeText);
+// document.getElementById("welcome").innerText.replace("_",window.sessionStorage.getItem("appkey"));

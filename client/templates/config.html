@@ -1,26 +1,60 @@
-<!DOCTYPE html>
-<html>
-<head>
-	<title></title>
-</head>
-<body>
-	<p id="welcome">_的抓取设置</p>
-	<select id="config_selector"></select>
-	<form>
-		<fieldset>
-			<legend>详细信息</legend>
-			品名选择器：<input type="" id="title_selector">
-			<br>
-			描述选择器：<input type="" id="comment_selector">
-			<br>
-			图片选择器：<input type="" id="image_selector">
-			<br>
-			<button id="add">新增</button>
-			<button id="modify">修改</button>
-			<button id="delete">删除</button>
-		</fieldset>
-	</form>
-	<script type="text/javascript" src="client/js/config.js"></script>
-	<script type="text/javascript" src="client/js/components/util.js"></script>
-</body>
-</html>
+<h1>&nbsp;</h1>
+<div class="row">
+	<div class="col-xs-12">
+		<div class="page-header">
+			<h1>我的抓取配置<span>&nbsp;</span><span><small><a href="#/how-to-configure">
+				如何配置?
+			</a></small></span></h1>
+		</div>
+	</div>
+</div>
+<div class="row">
+	<div class="col-xs-12">
+		<select id="crawler-select" class="form-control">
+			<option value="">価格.com</option>
+			<option value="">Yahooショッピング</option>
+			<option value="">rakuten</option>
+		</select>
+	</div>
+</div>
+<div class="row"><br></div>
+<div class="row">
+	<div class="col-xs-12">
+		<form class="form" role="form">
+			<div class="form-group">
+				<label for="crawler-name" class="control-label">爬虫名称（输入新名称以新增）：</label>
+				<input type="text" class="form-control" id="crawler-name">
+			</div>
+			<div class="form-group">
+				<label for="url-pattern" class="control-label">地址模版：</label>
+				<input type="text" class="form-control" id="url-pattern">
+			</div>
+			<div class="form-group">
+				<label for="title-selector" class="control-label">商品名称选择器：</label>
+				<input type="text" class="form-control" id="title-selector">
+			</div>
+			<div class="form-group">
+				<label for="comment-selector" class="control-label">商品描述选择器</label>
+				<input type="text" class="form-control" id="comment-selector">
+			</div>
+			<div class="form-group">
+				<label for="image-selector" class="control-label">商品图片选择器：</label>
+				<textarea type="text" class="form-control" id="image-selector"></textarea>
+			</div>
+		</form>
+	</div>
+</div>
+<div class="row">
+	<div class="col-xs-12">
+		<button class="btn btn-info btn-block" id="new-save-button">保存</button>
+	</div>
+</div>
+<div class="row"><br></div>
+<div class="row">
+	<div class="col-xs-12">
+		<button class="btn btn-danger btn-block" id="delete-button">删除</button>
+	</div>
+</div>
+<script type="text/javascript" src="client/js/components/util.js"></script>
+<script type="text/javascript" src="client/js/config.js"></script>
+<div class="row"><br></div>
