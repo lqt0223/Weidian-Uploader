@@ -72,6 +72,7 @@ var server = http.createServer(function(request, response) {
 	}else if(TEMPLATE_URLS.some(function(element){return element == accessPath})){ // load template html for pages
 		loadFile("./client/templates" + accessPath + ".html",response);
 	}else if(accessPath == "/favicon.ico"){ // ignore favicon
+		console.log("ignoring favicon");
 		response.end();
 	}else{
 		loadFile(accessPath, response); // load css and js files

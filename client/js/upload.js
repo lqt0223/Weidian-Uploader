@@ -92,7 +92,7 @@ document.getElementById("crawl").onclick = function(e){
 		url: itemSRC,
 		action: "run"
 	};
-	var ws = new WebSocket("ws://127.0.0.1:8081"); //later: when deploy to server change this.
+	var ws = new WebSocket("ws://localhost:8081"); //later: when deploy to server change this.
 	ws.addEventListener("message",function(event){
 		var result = JSON.parse(event.data);
 		// console.log(result);

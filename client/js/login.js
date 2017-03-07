@@ -13,7 +13,7 @@ document.getElementById("auth").onclick = function(){
 		action: "getToken"
 	};
 
-	var url = "http://127.0.0.1:8000/server/auth/token";
+	var url = "http://localhost:8000/server/auth/token";
 	ajaxPOST(url,true,params,function(response){
 		if(response.status == 0){
 			console.log(response);

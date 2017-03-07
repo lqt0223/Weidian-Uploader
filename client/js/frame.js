@@ -22,7 +22,7 @@ var style = new Style({
 			transform: "scale(1.2)"
 		}		
 	},
-	duration: "0.3s"
+	duration: "0.2s"
 });
 
 PT.init("#content-container");
