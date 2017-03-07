@@ -1,0 +1,28 @@
+{
+  "name": "weidian-uploader",
+  "version": "1.0.0",
+  "description": "crawler and uploader for weidian items",
+  "main": "server.js",
+  "dependencies": {
+    "crawler": "^1.0.3",
+    "gm": "^1.23.0",
+    "mysql": "^2.13.0",
+    "request": "^2.80.0",
+    "ws": "^2.0.2"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/lqt0223/Weidian-Uploader.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/lqt0223/Weidian-Uploader/issues"
+  },
+  "homepage": "https://github.com/lqt0223/Weidian-Uploader#readme"
+}
