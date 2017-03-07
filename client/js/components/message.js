@@ -1,3 +1,5 @@
+//message.js
+
 HTMLParagraphElement.prototype.message = function(content,timeout,repeat){
 	var instance = this;
 	if(!instance.originalText){

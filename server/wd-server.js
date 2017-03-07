@@ -57,6 +57,7 @@ WdServer.handle = function(request,callback){
 				switch(path[2]){
 					case "token":{
 						if(params.action == "getToken"){
+							console.log(params);
 							WdServer.token.get(params,function(response){
 								callback(response);
 							});
@@ -343,12 +344,21 @@ WdServer.crawler = {
 	}
 };
 
+
 WdServer.thumbnail = function(url,callback){
-	http.get(url,function(response){
-		gm(response).thumbnail(200,200).toBuffer(function(err,buffer){
-			if(err) console.log(err);
-			callback("data:image/jpg;base64," + buffer.toString("base64"));
-		});
+	// http.get(url,function(response){
+	// 	console.log(url);
+	// 	gm(response).thumbnail(200,200).toBuffer(function(err,buffer){
+	// 		if(err) console.log(err);
+	// 		callback("data:image/jpg;base64," + buffer.toString("base64"));
+	// 	});
+	// });
+	
+	gm(request(url, (err,res,body) => {
+		if(err) console.log(err);
+	})).thumbnail(200,200).toBuffer(function(err,buffer){
+		if(err) console.log(err);
+		callback("data:image/jpg;base64," + buffer.toString("base64"));
 	});
 };
 

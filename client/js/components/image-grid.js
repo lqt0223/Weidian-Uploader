@@ -1,3 +1,5 @@
+//image-grid.js
+
 function ImageGrid(option){
 	this.option = option;
 	this._popButtons = [];

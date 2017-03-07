@@ -1,3 +1,5 @@
+//checkmark.js
+
 function getNode(n, v) {
 	n = document.createElementNS("http://www.w3.org/2000/svg", n);
 	for (var p in v){

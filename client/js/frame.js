@@ -1,5 +1,35 @@
+//frame.js
 var contentContainer = document.getElementById("content-container");
-window.onhashchange = function(){
+
+var style = new Style({
+	in: {
+		from:{
+			opacity: 0.0,
+			transform: "scale(0.8)"
+		},
+		to:{
+			opacity: 1.0,
+			transform: "scale(1.0)"
+		}
+	},
+	out: {
+		from:{
+			opacity: 1.0,
+			transform: "scale(1.0)"
+		},
+		to:{
+			opacity: 0.0,
+			transform: "scale(1.2)"
+		}		
+	},
+	duration: "0.3s"
+});
+
+PT.init("#content-container");
+PT.enable(["#/config","#/login","#/upload","#/demo"],style);
+PT.customDirection("#/upload",1);
+
+function handler(){
 	var hash = window.location.hash || "#/login";
 	if(hash == "#/"){
 		window.location.hash = "#/login";
@@ -10,6 +40,7 @@ window.onhashchange = function(){
 			var responseType = xhr.getResponseHeader("Content-Type").split("/")[1];
 			if(responseType == "html"){
 				contentContainer.innerHTML = xhr.responseText;
+				PT.run();
 			}
 
 			var scripts = contentContainer.getElementsByTagName("script");
@@ -21,10 +52,11 @@ window.onhashchange = function(){
 		}
 	};
 	xhr.open("GET",hash.slice(1),true);
-	xhr.send();
-};
+	xhr.send();	
+}
 
-window.onload = window.onhashchange;
+window.addEventListener("hashchange",handler,false);
+window.addEventListener("load",handler,false);
 
 function runJS(path){
 	var xhr = new XMLHttpRequest();
@@ -33,7 +65,7 @@ function runJS(path){
 			var script = document.createElement("script");
 			script.setAttribute("type","text/javascript");
 			script.innerHTML = xhr.responseText;
-			document.body.appendChild(script);
+			contentContainer.appendChild(script);
 		}
 	};
 	xhr.open("GET",path,true);
@@ -47,5 +79,3 @@ for(var i = 0; i < navbarOptions.length; i++){
 	},false); 
 }
 
-// PageTransition.init();
-// PageTransition.enable(["#/config","#/login","#/upload"],"zoom-in-fade");

@@ -1,0 +1,19 @@
+@keyframes in-forth{
+	from{opacity:0.0;transform: scale(0.8);}
+	to{opacity: 1.0;transform: scale(1.0);}
+}
+
+@keyframes in-back{
+	from{opacity:1.0;transform: scale(1.0);}
+	to{opacity: 0.0;transform: scale(0.8);}
+}
+
+@keyframes out-forth{
+	from{opacity:1.0;transform: scale(1.0);}
+	to{opacity:0.0;transform: scale(1.2);}
+}
+
+@keyframes out-back{
+	from{opacity:0.0;transform: scale(1.2);}
+	to{opacity:1.0;transform: scale(1.0);}
+}

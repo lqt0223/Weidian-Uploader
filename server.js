@@ -77,8 +77,8 @@ var server = http.createServer(function(request, response) {
 		loadFile(accessPath, response); // load css and js files
 	}
 
-}).listen(8888);
-console.log('Server running at http://127.0.0.1:8888/');
+}).listen(8000);
+console.log('Server running at http://127.0.0.1:8000/');
 
 //API
 // SessionServer.init(server);

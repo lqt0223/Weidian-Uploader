@@ -1,3 +1,5 @@
+//login.js
+
 document.getElementById("appkey").value = "673196";
 document.getElementById("secret").value = "7641180cda5f45b68601790ec1a6d763";
 // document.getElementById("item_url").value = "http://kakaku.com/item/K0000752291/";

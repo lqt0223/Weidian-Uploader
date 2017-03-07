@@ -1,3 +1,5 @@
+//upload.js
+
 /*
 
 load templates
@@ -72,11 +74,8 @@ imageGrid.addPopButton("Upload Image",function(){
 });
 
 var imgPanel = document.getElementsByClassName("panel-body")[1];
-
 imgPanel.insertBefore(imageGrid.view,imgPanel.childNodes[2]);
-
 document.getElementById("item-src").value = "http://kakaku.com/item/K0000752291/"; //debug
-
 document.getElementById("crawl").onclick = function(e){
 	e.preventDefault();
 	imageGrid.clear();

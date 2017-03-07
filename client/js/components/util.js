@@ -1,3 +1,5 @@
+//util.js
+
 function ajaxGET(url,params,callback){
 	var xhr = new XMLHttpRequest();
 	url += "?";

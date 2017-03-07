@@ -1,3 +1,5 @@
+//image-pop.js
+
 HTMLImageElement.prototype.pop = function(parent){
 	var instance = this;
 	var realsrc = this.getAttribute("realsrc");

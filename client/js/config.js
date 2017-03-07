@@ -1,3 +1,5 @@
+//config.js
+
 checkToken();
 
 var NEW_BUTTON = 1;
